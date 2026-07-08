@@ -1,0 +1,25 @@
+import numpy as np
+import timeit
+
+np.random.seed(42)
+A = np.random.randn(2000, 2000)
+n_runs = 10
+
+def normal_calc(arr):
+    return arr ** 2 + 2 * arr + 1
+
+def optimized_calc(arr):
+    result = np.empty_like(arr)
+    temp = np.empty_like(arr)
+    np.multiply(arr, arr, out=result)
+    np.multiply(arr, 2, out=temp)
+    np.add(result, temp, out=result)
+    np.add(result, 1, out=result)
+    return result
+
+t_normal = timeit.timeit(lambda: normal_calc(A), number=n_runs)
+t_opt = timeit.timeit(lambda: optimized_calc(A), number=n_runs)
+
+print(f"普通写法:   单轮平均 {t_normal / n_runs:.4f} 秒")
+print(f"优化写法:   单轮平均 {t_opt / n_runs:.4f} 秒")
+print(f"结果是否一致: {np.allclose(normal_calc(A), optimized_calc(A))}")
