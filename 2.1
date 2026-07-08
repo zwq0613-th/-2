@@ -1,0 +1,9 @@
+import numpy as np
+
+prices = np.array([100, 102, 105, 103, 107])
+returns_1 = np.log(prices[1:] / prices[:-1])
+returns_2 = np.diff(np.log(prices))
+
+print(f"原始股价: {prices}")
+print(f"每日对数收益率: {returns_1.round(6)}")
+print(f"两种方法结果一致: {np.allclose(returns_1, returns_2)}")
