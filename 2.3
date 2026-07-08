@@ -1,0 +1,16 @@
+import numpy as np
+
+np.random.seed(42)
+n_stocks = 1000
+n_days = 252
+returns_matrix = np.random.randn(n_stocks, n_days) * 0.02
+
+daily_vol = np.std(returns_matrix, axis=1, ddof=1)
+annual_vol = daily_vol * np.sqrt(252)
+corr_matrix = np.corrcoef(returns_matrix)
+
+print(f"收益率矩阵形状: {returns_matrix.shape}")
+print(f"年化波动率范围: [{annual_vol.min():.4f}, {annual_vol.max():.4f}]")
+print(f"前5支股票年化波动率: {annual_vol[:5].round(4)}")
+print(f"相关系数矩阵形状: {corr_matrix.shape}")
+print(f"股票1与股票2的相关系数: {corr_matrix[0, 1]:.4f}")
