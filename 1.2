@@ -1,0 +1,16 @@
+import numpy as np
+import timeit
+
+arr_c = np.ones((1000, 1000), order='C')
+arr_f = np.ones((1000, 1000), order='F')
+n_runs = 200
+
+t_c_row = timeit.timeit(lambda: arr_c.sum(axis=1), number=n_runs)
+t_c_col = timeit.timeit(lambda: arr_c.sum(axis=0), number=n_runs)
+t_f_row = timeit.timeit(lambda: arr_f.sum(axis=1), number=n_runs)
+t_f_col = timeit.timeit(lambda: arr_f.sum(axis=0), number=n_runs)
+
+print(f"C顺序 按行求和: 单轮平均 {t_c_row / n_runs:.6f} 秒")
+print(f"C顺序 按列求和: 单轮平均 {t_c_col / n_runs:.6f} 秒")
+print(f"F顺序 按行求和: 单轮平均 {t_f_row / n_runs:.6f} 秒")
+print(f"F顺序 按列求和: 单轮平均 {t_f_col / n_runs:.6f} 秒")
