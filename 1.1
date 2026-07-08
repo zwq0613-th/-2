@@ -1,0 +1,15 @@
+import numpy as np
+import timeit
+
+np.random.seed(42)
+A = np.random.randn(1000, 2000)
+B = np.random.randn(2000, 3000)
+n_runs = 10
+
+t_dot = timeit.timeit(lambda: np.dot(A, B), number=n_runs)
+t_at = timeit.timeit(lambda: A @ B, number=n_runs)
+t_matmul = timeit.timeit(lambda: np.matmul(A, B), number=n_runs)
+
+print(f"np.dot:     单轮平均 {t_dot / n_runs:.4f} 秒")
+print(f"@ 运算符:   单轮平均 {t_at / n_runs:.4f} 秒")
+print(f"np.matmul:  单轮平均 {t_matmul / n_runs:.4f} 秒")
